@@ -1,23 +1,20 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import type { Post } from "@/types/Post";
 
-export default function Home() {
-  const apiUrl = "/api/posts";
-  const [posts, setPosts] = useState<Post[]>();
+// get the post data for our server component
+async function getPosts() {
+  const res = await fetch(`http://localhost:3000/api/posts`);
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+  const json = await res.json();
+  return json.data as Post[];
+}
 
-  useEffect(() => {
-    async function getData() {
-      const resp = await fetch(apiUrl);
-      const json = await resp.json();
-      setPosts(json?.data);
-    }
-
-    getData();
-  }, []);
+export default async function Home() {
+  const posts = await getPosts();
 
   return (
     <div className="flex flex-col items-center">
