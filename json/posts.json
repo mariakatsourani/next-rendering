@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "publishDate": "2023-01-05",
+    "title": "Post 1",
+    "slug": "post-1",
+    "summary": "Diam quam nulla porttitor massa id neque aliquam vestibulum morbi.",
+    "thumbnail": "trees.jpg"
+  },
+  {
+    "id": 2,
+    "publishDate": "2023-04-23",
+    "title": "Post 2",
+    "slug": "post-2",
+    "summary": "Amet consectetur adipiscing elit.",
+    "thumbnail": "road.jpg"
+  },
+  {
+    "id": 3,
+    "publishDate": "2023-05-25",
+    "title": "Post 3",
+    "slug": "post-3",
+    "summary": "At ultrices mi tempus imperdiet nulla malesuada pellentesque elit eget gravida.",
+    "thumbnail": "bike.jpg"
+  }
+]
