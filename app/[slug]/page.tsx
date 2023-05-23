@@ -1,5 +1,17 @@
-import type { PostContent } from "@/types/Post";
+import { getJson } from "@/lib/getJson";
+import type { PostContent, Post } from "@/types/Post";
 import Image from "next/image";
+
+// Tell Next which dynamic routes in this case /[slug] it should generate during build
+export async function generateStaticParams() {
+  // get parsed posts.json
+  const posts = await getJson<Post[]>("posts");
+
+  // return an array with all post slugs
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
 
 // get the post data for our server component
 async function getPost(slug: string) {
