@@ -1,33 +1,26 @@
-"use client";
-
-import { PostContent } from "@/types/Post";
-import { useEffect, useState } from "react";
+import type { PostContent } from "@/types/Post";
 import Image from "next/image";
+
+// get the post data for our server component
+async function getPost(slug: string) {
+  const res = await fetch(`http://localhost:3000/api/post/${slug}`);
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+  const json = await res.json();
+  return json.data as PostContent;
+}
 
 type PageParams = {
   params: {
+    // the slug here maps to the [slug] directory
     slug: string;
   };
 };
 
-export default function Post({ params: { slug } }: PageParams) {
-  const [post, setPost] = useState<PostContent>();
-
-  useEffect(() => {
-    // get post data from the api
-    async function getData() {
-      const resp = await fetch(`/api/post/${slug}`);
-      const json = await resp.json();
-      setPost(json.data);
-    }
-
-    getData();
-  }, [slug]);
-
-  // if we don't have data yet we assume we're in a loading state
-  if (!post) {
-    return <p>...loading</p>;
-  }
+export default async function Post({ params: { slug } }: PageParams) {
+  const post = await getPost(slug);
 
   return (
     <article className="w-full flex flex-col items-center">
